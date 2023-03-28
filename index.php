@@ -30,6 +30,10 @@
 	foreach ($deliverySet as $k=>$v)
 	{
 		// Перебор Служб доставки
+		if (empty($_GET["service"]))
+		{
+			$_GET["service"] = "all";
+		}
 		switch ($_GET["service"]) {
 			// Инфо в контексте списка транспортных компаний
 			case "all" : $arr = $deliveryServices; break;
