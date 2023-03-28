@@ -30,13 +30,19 @@
 	foreach ($deliverySet as $k=>$v)
 	{
 		// Перебор Служб доставки
-		foreach ($deliveryServices as $method)
+		switch ($_GET["service"]) {
+			// Инфо в контексте списка транспортных компаний
+			case "all" : $arr = $deliveryServices; break;
+			// Инфо в контексте одной выбранной
+			default : $arr = [$_GET["service"]]; break;
+		}
+		foreach ($arr as $method)
 		{
 			$priceList = App::{$method}($v["sourceKladr"], $v["targetKladr"], $v["weight"]);
 			$deliveryPriceList[] = $priceList;
 		}
 	}
-	var_dump($deliveryPriceList);
+
 ?>
 
 <!DOCTYPE html>
@@ -50,26 +56,46 @@
 	<div class="container">
 		<h1>Модуль расчёта стоимости доставки</h1>
 
+		<form class="row my-3" action="/index.php" method="get">
+			<div class="col-12 col-md-6">
+				<select class="form-select" name="service">
+					<option value="all" <?=$_GET["service"]=="all"?"selected":""?>>Все компании</option>
+					<option value="fastDelivery" <?=$_GET["service"]=="fastDelivery"?"selected":""?>>fastDelivery</option>
+					<option value="slowDelivery" <?=$_GET["service"]=="slowDelivery"?"selected":""?>>slowDelivery</option>
+				</select>
+			</div>
+			<div class="col-6 mt-3 mt-md-0">
+				<input type="submit" class="btn btn-primary" value="Submit">
+			</div>
+		</form>
+
 		<table class="table table-striped">
 			<thead>
 				<tr>
-					<th scope="col">Компания</th>
-					<th scope="col">Откуда</th>
-					<th scope="col">Куда</th>
-					<th scope="col">Стоимость</th>
-					<th scope="col">Дата</th>
-					<th scope="col">Ошибка</th>
+					<th>Компания</th>
+					<th>Откуда</th>
+					<th>Куда</th>
+					<th>Стоимость</th>
+					<th>Дата</th>
+					<th>Ошибка</th>
 				</tr>
 			</thead>
 			<tbody>
+<?php
+	foreach ($deliveryPriceList as $v)
+	{
+?>
 				<tr>
-					<td>service</th>
-					<td>sourceKladr</td>
-					<td>targetKladr</td>
-					<td>price</td>
-					<td>date</td>
-					<td>error</td>
+					<td><?=$v["service"]?></th>
+					<td><?=$v["sourceKladr"]?></td>
+					<td><?=$v["targetKladr"]?></td>
+					<td class="text-end pe-5"><?=$v["price"]?></td>
+					<td><?=$v["date"]?></td>
+					<td><?=$v["error"]?></td>
 				</tr>
+<?php
+	}
+?>
 			</tbody>
 		</table>
 	</div>

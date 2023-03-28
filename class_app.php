@@ -46,7 +46,7 @@ class App
 		// Преобразование данных из формата службы доставки в нужный формат
 		$src = json_decode($json, true);
 		$res = [];
-		$res["service"] = "Быстрая доставка";
+		$res["service"] = "fastDelivery";
 		$res["sourceKladr"] = $sourceKladr;
 		$res["targetKladr"] = $targetKladr;
 		$res["price"] = $src["price"];
@@ -79,21 +79,21 @@ class App
 		switch (true) {
 			case $sourceKladr == "63019000058000300" && $targetKladr == "77000000000151900" && $weight == 1.523 :
 				$json = '{
-					"coefficient":4.5,
+					"coefficient":4.523,
 					"date":"2023-03-29",
 					"error":"нет ошибок"
 				}';
 				break;
 			case $sourceKladr == "31008000002000100" && $targetKladr == "89002000003000100" && $weight == 7.258 :
 				$json = '{
-					"coefficient":6.2,
+					"coefficient":6.271,
 					"date":"2023-04-05",
 					"error":"нет ошибок"
 				}';
 				break;
 			case $sourceKladr == "47012000360000200" && $targetKladr == "27002000030000100" && $weight == 6.321 :
 				$json = '{
-					"coefficient":12.3,
+					"coefficient":12.345,
 					"date":"2023-04-09",
 					"error":"нет ошибок"
 				}';
@@ -103,7 +103,7 @@ class App
 		// Преобразование данных из формата службы доставки в нужный формат
 		$src = json_decode($json, true);
 		$res = [];
-		$res["service"] = "Медленная доставка";
+		$res["service"] = "slowDelivery";
 		$res["sourceKladr"] = $sourceKladr;
 		$res["targetKladr"] = $targetKladr;
 		$res["price"] = round(150 * $src["coefficient"], 2);
