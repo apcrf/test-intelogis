@@ -54,7 +54,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 	<title>test-intelogis</title>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" type="text/css">
+	<link href="/bootstrap.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div class="container">
